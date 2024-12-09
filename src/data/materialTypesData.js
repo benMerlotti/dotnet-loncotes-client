@@ -1,5 +1,5 @@
 const _apiUrl = "/api/materialtypes";
 
 export const getMaterialTypes = () => {
-  return fetch(_apiUrl).then((res) => res.json());
+  return fetch('https://localhost:5001/materialtypes').then((res) => res.json());
 };

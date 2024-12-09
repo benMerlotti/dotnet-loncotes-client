@@ -6,16 +6,18 @@ import { getMaterial } from "../../data/materialsData";
 export default function MaterialDetails() {
   const { id } = useParams();
 
-  const [material, setMaterial] = useState(null);
+  const [materialArray, setMaterialArray] = useState(null);
 
   //add useEffect here to get the ticket details from the API
   useEffect(() => {
-    getMaterial(id).then(setMaterial);
+    getMaterial(id).then(setMaterialArray);
   }, []);
 
-  if (!material) {
+  if (!materialArray) {
     return null;
   }
+
+  const material = materialArray[0];
 
   return (
     <div className="container">
@@ -24,11 +26,11 @@ export default function MaterialDetails() {
         <tbody>
           <tr>
             <th scope="row">Type</th>
-            <td>{material.materialType.name}</td>
+            <td>{material?.materialType?.name}</td>
           </tr>
           <tr>
             <th scope="row">Genre</th>
-            <td>{material.genre.name}</td>
+            <td>{material?.genre?.name}</td>
           </tr>
           <tr>
             <th scope="row">Out Of Circulation?</th>
