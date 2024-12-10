@@ -1,27 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { getAvailableMaterials } from "../../data/materialsData";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Table } from "reactstrap";
-import { getMaterials, removeMaterial } from "../../data/materialsData";
-import { Link } from "react-router-dom";
 
-export default function MaterialList() {
+export const Browse = () => {
   const [materials, setMaterials] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getMaterials().then(setMaterials);
+    getAvailableMaterials().then(setMaterials);
   }, []);
 
-  const handleRemove = (id) => {
-    removeMaterial(id).then(() => {
-      getMaterials().then((data) => {
-        setMaterials(data);
-      });
-    });
+  const handleCheckout = (id) => {
+    navigate(`/checkout-item/${id}`);
   };
 
   return (
     <div className="container">
       <div className="sub-menu bg-light">
-        <h4>Materials</h4>
+        <h4>Available Materials</h4>
         <Link to="/materials/create">Add</Link>
       </div>
       <Table>
@@ -47,7 +45,9 @@ export default function MaterialList() {
                     <Link to={`${m.id}`}>Details</Link>
                   </td>
                   <td>
-                    <button onClick={() => handleRemove(m.id)}></button>
+                    <button onClick={() => handleCheckout(m.id)}>
+                      CHECKOUT
+                    </button>
                   </td>
                 </tr>
               )
@@ -56,4 +56,4 @@ export default function MaterialList() {
       </Table>
     </div>
   );
-}
+};
